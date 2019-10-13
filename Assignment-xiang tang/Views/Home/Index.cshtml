@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Let Drive</h1>
+    <p class="lead">Let Drive can privide you with a perfect rental car method</p>
+    <p><a href="/Orders/SelectCar" class="btn btn-primary btn-lg">Start your reservation &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Find our location</h2>
+        <p>
+            We have many car rental shops and you can choose the nearest one you live in
+        </p>
+        <p><a class="btn btn-default" href="/Home/Location">Location &raquo;</a></p>
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+    <div class="col-md-6">
+        <h2>Your Order List</h2>
+        <p>You can find your order list</p>
+        <p><a class="btn btn-default" href="/Orders/Index">Order &raquo;</a></p>
+    </div>
+    }
+    @*<div class="col-md-4">
+        <h2></h2>
+        <p></p>
+        <p><a class="btn btn-default" href=""> &raquo;</a></p>
+    </div>*@
+</div>

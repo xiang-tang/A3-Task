@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "Location";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Location</h2>
+<p>We have a lot of car rental stores, you can choose the nearest one</p>
+
+<div id='map' style='width: 1000px; height: 800px;'></div>
+
+@section Scripts{
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoicm9iaW50dHR0IiwiYSI6ImNrMW43ZWh0ZDA1NTUzbXJ5eTNrN2g5amwifQ.48OOL74-1KMn698u7Ttn9w';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [145.138596, -38.91376],
+            zoom: 6
+        });
+
+        var geojson = {
+            type: 'FeatureCollection',
+            features: [{
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [145.045837, -37.876823]
+                },
+                properties: {
+                    title: 'Caulfield Let Drive',
+                    description: 'This is the best solution to rent car'
+                }
+            },
+           {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [145.130000, -37.915000]
+                },
+                properties: {
+                    title: 'Clayton Let Drive',
+                    description: 'This is the best solution to rent car'
+                }
+                },
+                {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [144.961000, -37.798300]
+                },
+                properties: {
+                    title: 'Melbourne CBD Let Drive',
+                    description: 'This is the best solution to rent car'
+                }
+                },
+                {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [145.096000, -37.881000]
+                },
+                properties: {
+                    title: 'ChadStond Let Drive',
+                    description: 'This is the best solution to rent car'
+                }
+                },
+                {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [144.998000, -37.823000]
+                },
+                properties: {
+                    title: 'Richmond Let Drive',
+                    description: 'This is the best solution to rent car'
+                }
+                }
+
+
+            ]
+        };
+        // add markers to map
+        geojson.features.forEach(function (marker) {
+
+            // create a HTML element for each feature
+            var el = document.createElement('div');
+            el.className = 'marker';
+
+            // make a marker for each feature and add to the map
+
+            new mapboxgl.Marker(el)
+                .setLngLat(marker.geometry.coordinates)
+                .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                    .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+                .addTo(map);
+
+
+        })
+        map.addControl(new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl
+        }));
+
+        // Add geolocate control to the map.
+        map.addControl(new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true
+        }));
+
+    </script>
+
+
+}
+
+
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
+<style>
+
+    #map {
+        position: absolute;
+        top: 200px;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .marker {
+        background-image: url('../../Content/DataTables/marker.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .mapboxgl-popup {
+        max-width: 200px;
+    }
+
+    .mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+
+</style>
+
+
